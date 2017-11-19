@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Main page</title>
+    <meta charset="utf-8">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+    <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+    <script src="javascripts/libs/codemirror.js"></script>
+    <script src="javascripts/libs/javascript.js"></script>
+    <script src="javascripts/libs/socket.io.js"></script>
+    <script src="javascripts/libs/moment-with-locales.js"></script>
+    <script src="javascripts/libs/moment-timezone-with-data.js"></script>
+    <style>
+        #title-input
+        {
+            margin-top: 15px;
+            margin-bottom: 10px;
+            height: 35px;
+            font-size: 24px;
+        }
+
+        #replyBtn
+        {
+            float: right;
+        }
+
+        #replyContent
+        {
+            height: 35px;
+            width: 450px;
+            float: left;
+        }
+
+        #commentRegibtn
+        {
+            text-align: center;
+        }
+    </style>
+    <script type='text/javascript'>
+        function submitContents(option) {
+            var title = $('#title-input').val();
+            var content = $('#CKEditor').val();
+
+            if(option == 'add') {
+                if(title == '' || content == '') {
+                    alert("제목과 내용, 작성자 비밀번호 모두 있어야합니다.");
+                    return;
+                } else {
+                    $('#addComment').submit();
+                }
+            }
+        }
+
+        function addCard(title, content) {
+            var newCard = new cardContents;
+
+            newCard.title = title;
+            newCard.content = content;
+
+            newCard.save(function (err) {
+                if (err) throw  err;
+            })
+
+        }
+
+        function dateFormatChange(date) {
+            var options = {
+                weekday: "short", year: "numeric", month: "short",
+                day: "numeric", hour: "2-digit", minute: "2-digit"
+            };
+            return date.toLocaleTimeString("ko-KR", options);
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <!-- 제목 입력 텍스트 에어리어 -->
+    <form id="addComment" action="/card" method="post">
+        <input class="form-control" type="text" placeholder="Input Title" name="commentTitle" id="title-input">
+        <form>
+            <textarea name="commentContent" id="CKEditor" rows="20" cols="60">
+
+            </textarea>
+            <script>
+                CKEDITOR.replace( 'CKEditor' );
+            </script>
+        </form>
+        <br>
+        <ul class="list-group">
+            <li class="list-group-item">댓글 입력</li>
+            <li class="list-group-item">~~~님의 댓글</li>
+            <li class="list-group-item">감사합니다</li>
+        </ul>
+
+        <div class="form-group">
+            <label for="staticEmail2" class="sr-only">Email</label>
+            <input type="text" class="form-control" id="replyContent" name="commentReply" value="Reply">
+            <button type="button" class="btn btn-outline-primary" id="replyBtn">답변 등록</button>
+        </div>
+        <br><br><br>
+        <center><button type="button" onclick="submitContents('add');" class="btn btn-primary btn-lg" id="commentRegibtn">Comment Register</button></center>
+    </form>
+</div>
+</body>
+</html>

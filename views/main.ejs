@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Main page</title>
+    <meta charset="utf-8">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='stylesheets/codemirror.css'>
+    <link rel='stylesheet' href='stylesheets/eclipse.css'>
+    <link rel='stylesheet' href='stylesheets/chat.css'>
+
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+    <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+    <script src="javascripts/libs/codemirror.js"></script>
+    <script src="javascripts/libs/javascript.js"></script>
+    <script src="javascripts/libs/socket.io.js"></script>
+    <script src="javascripts/libs/moment-with-locales.js"></script>
+    <script src="javascripts/libs/moment-timezone-with-data.js"></script>
+    <script src="javascripts/main.js"></script>
+    <style>
+        .tab-pane {
+            margin-top: 10px;
+        }
+
+    </style>
+    <script type='text/javascript'>
+
+    </script>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/"><span class="glyphicon glyphicon-home" style="margin-top: 10px; color: black; font-size: 50px;"></span></a>
+        </div>
+        <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1" aria-expanded="false" style="height: 1px;">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a class="btn btn-link navbar-btn" href='/login/logout'>Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br><br><br><br>
+<div class="container">
+    <ul id="myTab" class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+            <a data-target="#comment" id="comment-tab" role="tab" data-toggle="tab" aria-controls="comment" aria-expanded="true">코멘트</a>
+        </li>
+        <li role="presentation">
+            <a data-target="#manage" role="tab" id="manage-tab" data-toggle="tab" aria-controls="manage" aria-expanded="false">매니저 기능</a>
+        </li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <div role="tabpanel" class="tab-pane fade active in" id="files" aria-labelledby="comment-tab">
+            <button type="button" class="btn btn-default btn-comment">코멘트 생성</button>
+            <!-- 리스트 클릭 시  팝업 -->
+            <!--<div class="list-group">-->
+                <!--<a href="#" onclick="window.open('/card/', 'Test', 'width=600px, height=700px, resizable=no, left=500 , top=100'); return false" class="list-group-item list-group-item-action flex-column align-items-start">-->
+                    <!--<div class="d-flex w-100 justify-content-between">-->
+                        <!--<h5 class="mb-1">770</h5>-->
+                    <!--<small> 날짜 / 작성자 </small>-->
+                    <!--</div>-->
+                    <!--<p class="mb-1"> 내용 </p>-->
+                <!--</a>-->
+
+            <!--</div>-->
+            <div class="list-group">
+                <% data.forEach(function(e){ %>
+                <a href="#" onclick="window.open('/card/<%= e._id %>', 'Test', 'width=600px, height=700px, resizable=no, left=500 , top=100'); return false" class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1"> <%= e.title %> </h5>
+                    </div>
+                    <p class="mb-1"> <%= e.content %> </p>
+                </a>
+                <% }) %>
+            </div>
+
+
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="chat" aria-labelledby="chat-tab">
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
